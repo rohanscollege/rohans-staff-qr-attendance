@@ -68,7 +68,7 @@ button{width:100%;padding:13px;border:0;border-radius:10px;font-size:16px;font-w
 </div>
 <script>
 /* Replace this with the deployed Staff Apps Script Web App URL ending in /exec. */
-const APPS_SCRIPT_URL = "PASTE_STAFF_APPS_SCRIPT_WEB_APP_URL_HERE";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4E2rppQige2hWRk46wc62yMkzhlLUTQlDCdndas2vPtjRMTiLDKjFgDAI8GMyLeFt7g/exec";
 const urlParams = new URLSearchParams(window.location.search);
 const deviceId = String(urlParams.get("device") || "SCAN001").trim().toUpperCase();
 let sessionToken="", stream=null, scanning=false, detector=null, detecting=false, jsonpCounter=0, scanCount=0;

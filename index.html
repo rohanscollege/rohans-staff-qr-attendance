@@ -109,7 +109,7 @@ function callApi(params){
       if(finished)return;
       finished=true;clearTimeout(timeout);cleanup();resolve(response);
     };
-    script.onerror=()=>finishError("The browser could not load the Apps Script response. The /exec URL may be old, the deployment may not allow access, or the script may not be deployed as a Web app.");
+    script.onerror=()=>finishError("Browser blocked or could not load the Apps Script response. Since direct ping works, check Deploy > Manage deployments: deployment type must be Web app, Execute as must be Me, and access must allow Anyone/anonymous access. Then deploy a New version. Also verify this exact /exec URL is the current deployment URL.");
     const separator=endpoint.includes("?")?"&":"?";
     script.src=endpoint+separator+query.toString();
     document.head.appendChild(script);

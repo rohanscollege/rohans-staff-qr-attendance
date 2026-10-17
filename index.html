@@ -2,218 +2,77 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Rohan's College - Staff Attendance Scanner</title>
 <style>
 *{box-sizing:border-box}body{margin:0;padding:12px;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#eef3f8,#f8fafc);color:#1f2937}
-.container{max-width:600px;margin:auto}.card{background:#fff;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 6px 25px #00000018}
-.logo{width:100px;height:100px;border-radius:50%;object-fit:contain;display:block;margin:0 auto 12px}.college{text-align:center;font-size:20px;font-weight:bold;line-height:1.35}.subtitle{text-align:center;margin-top:6px;color:#666;font-size:13px}.device{text-align:center;margin-top:8px;font-weight:bold}
+.container{max-width:600px;margin:auto}.card{background:#fff;border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 6px 25px #00000019}
+.logo{width:110px;height:110px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 12px;border:4px solid white;box-shadow:0 4px 14px #0003}
+.college{text-align:center;font-size:20px;font-weight:bold;line-height:1.35}.subtitle{text-align:center;margin-top:6px;color:#666;font-size:13px}.device{text-align:center;margin-top:7px;font-weight:bold}
 label{display:block;font-weight:bold;margin-bottom:7px}input{width:100%;padding:13px;border:1px solid #ccc;border-radius:10px;font-size:19px;text-align:center;letter-spacing:4px}
-button{width:100%;padding:13px;border:0;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}button:disabled{opacity:.55}.verify{background:#198754;color:#fff}.start{background:#0d6efd;color:#fff}.stop{background:#dc3545;color:#fff}
-#cameraBox,#staffCard{display:none}#video{width:100%;border-radius:16px;background:#000;margin-top:12px}.status{margin-top:12px;padding:13px;border-radius:10px;background:#eef2f7;white-space:pre-line;line-height:1.45}.status.error{background:#fdecec;color:#a40000}.status.success{background:#eaf7ee;color:#146c2e}.scan-count{text-align:center;font-weight:bold;margin-top:10px}
-.staff-header{text-align:center;border-bottom:1px solid #eee;padding-bottom:12px;margin-bottom:10px}.staff-name{font-size:23px;font-weight:bold}.staff-id{margin-top:4px;color:#666;font-size:13px}.details{display:grid;grid-template-columns:1fr 1fr;gap:9px}.detail{background:#f6f8fa;border-radius:10px;padding:10px}.detail-label{font-size:11px;color:#777}.detail-value{font-size:14px;font-weight:bold;margin-top:3px;word-break:break-word}
-.attendance-result{margin-top:14px;padding:15px;border-radius:14px;background:#eef5ff;text-align:center}.action{font-size:22px;font-weight:bold}.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.result-item{background:white;border-radius:9px;padding:9px}.result-label{font-size:10px;color:#777}.result-value{font-size:14px;font-weight:bold;margin-top:3px}.summary{margin-top:12px;background:#f7f8fa;border-radius:12px;padding:12px}.summary-title{font-weight:bold;text-align:center;margin-bottom:8px}.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.ready{text-align:center;color:#198754;font-weight:bold;margin-top:10px}.small{text-align:center;color:#777;font-size:12px;margin:12px 0}
-@media(max-width:450px){.details{grid-template-columns:1fr}.college{font-size:18px}}
+button{width:100%;padding:13px;border:0;border-radius:10px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px}button:disabled{opacity:.55}
+.verify{background:#198754;color:#fff}.start{background:#0d6efd;color:#fff}.stop{background:#dc3545;color:#fff}
+#cameraBox{display:none}#video{width:100%;border-radius:16px;background:#000;margin-top:12px}.status{margin-top:12px;padding:13px;border-radius:10px;background:#eef2f7;white-space:pre-line;line-height:1.45}.status.error{background:#fdecec;color:#a40000}.status.success{background:#eaf7ee;color:#146c2e}
+.scan-count{text-align:center;font-weight:bold;margin-top:10px}.result-card{display:none}.staff-header{text-align:center;border-bottom:1px solid #eee;padding-bottom:12px;margin-bottom:10px}.staff-name{font-size:23px;font-weight:bold}.staff-id{margin-top:4px;color:#666;font-size:13px}
+.details{display:grid;grid-template-columns:1fr 1fr;gap:9px}.detail{background:#f6f8fa;border-radius:10px;padding:10px}.detail-label{font-size:11px;color:#777}.detail-value{font-size:14px;font-weight:bold;margin-top:3px;word-break:break-word}
+.attendance-result{margin-top:14px;padding:15px;border-radius:14px;background:#eef5ff;text-align:center}.action{font-size:22px;font-weight:bold}.result-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.result-item{background:#fff;border-radius:9px;padding:9px}.result-label{font-size:10px;color:#777}.result-value{font-size:14px;font-weight:bold;margin-top:3px;word-break:break-word}
+.small{text-align:center;color:#777;font-size:12px;margin:12px 0;line-height:1.5}@media(max-width:450px){.details{grid-template-columns:1fr}.college{font-size:18px}}
 </style>
 </head>
-<body>
-<div class="container">
-  <div class="card">
-    <img class="logo" src="https://drive.google.com/thumbnail?id=1RXMqu0Sa05-Kd1sDvlRnfhjxm8Yun_Av&sz=w400" alt="College Logo" onerror="this.style.display='none'">
-    <div class="college">ROHAN'S COLLEGE OF HOTEL MANAGEMENT</div>
-    <div class="subtitle">STAFF QR ATTENDANCE SCANNER</div>
-    <div class="device">Device: <span id="deviceDisplay"></span></div>
-  </div>
-  <div class="card" id="loginBox">
-    <label for="pin">Enter 4-Digit Device PIN</label>
-    <input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
-    <button id="verifyButton" class="verify">VERIFY DEVICE</button>
-    <div id="loginStatus" class="status">Enter the device PIN and tap VERIFY DEVICE.</div>
-  </div>
-  <div class="card" id="cameraBox">
-    <div id="cameraStatus" class="status success">Device verified. Start the camera.</div>
-    <button id="startButton" class="start">START CAMERA</button>
-    <button id="stopButton" class="stop">STOP CAMERA</button>
-    <video id="video" autoplay muted playsinline></video>
-    <div id="scanCount" class="scan-count">Scanned: 0</div>
-  </div>
-  <div class="card" id="staffCard">
-    <div class="staff-header"><div class="staff-name" id="staffName"></div><div class="staff-id" id="staffId"></div></div>
-    <div class="details" id="staffDetails"></div>
-    <div class="attendance-result">
-      <div class="action" id="attendanceAction"></div>
-      <div class="result-grid">
-        <div class="result-item"><div class="result-label">DATE</div><div class="result-value" id="resultDate">-</div></div>
-        <div class="result-item"><div class="result-label">IN TIME</div><div class="result-value" id="resultIn">-</div></div>
-        <div class="result-item"><div class="result-label">OUT TIME</div><div class="result-value" id="resultOut">-</div></div>
-        <div class="result-item"><div class="result-label">DURATION</div><div class="result-value" id="resultDuration">-</div></div>
-        <div class="result-item"><div class="result-label">STATUS</div><div class="result-value" id="resultStatus">-</div></div>
-        <div class="result-item"><div class="result-label">LATE ARRIVAL</div><div class="result-value" id="resultLate">-</div></div>
-      </div>
-      <div class="summary">
-        <div class="summary-title" id="summaryTitle">Current Month Attendance</div>
-        <div class="summary-grid">
-          <div class="result-item"><div class="result-label">ATTENDANCE %</div><div class="result-value" id="sumPct">-</div></div>
-          <div class="result-item"><div class="result-label">WORKING DAYS ELAPSED</div><div class="result-value" id="sumWorking">-</div></div>
-          <div class="result-item"><div class="result-label">FULL / HALF DAYS</div><div class="result-value" id="sumFullHalf">-</div></div>
-          <div class="result-item"><div class="result-label">ABSENT DAYS</div><div class="result-value" id="sumAbsent">-</div></div>
-          <div class="result-item"><div class="result-label">PAYABLE DAYS</div><div class="result-value" id="sumPayable">-</div></div>
-          <div class="result-item"><div class="result-label">DEDUCTION DAYS</div><div class="result-value" id="sumDeduction">-</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="ready">✓ Ready for next staff member</div>
-  </div>
-  <div class="small">Keep the camera running. Scan each staff member's existing QR code. First scan records IN; second scan records OUT.</div>
+<body><div class="container">
+<div class="card">
+<img class="logo" src="https://drive.google.com/thumbnail?id=1RXMqu0Sa05-Kd1sDvlRnfhjxm8Yun_Av&sz=w400" alt="College Logo" onerror="this.style.display='none'">
+<div class="college">ROHAN'S COLLEGE OF HOTEL MANAGEMENT</div>
+<div class="subtitle">Staff Attendance Scanner</div>
+<div class="device">Device: <span id="deviceDisplay"></span></div>
+</div>
+<div class="card" id="loginBox">
+<label for="pin">Enter 4-Digit Device PIN</label>
+<input id="pin" type="password" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
+<button id="verifyButton" class="verify">VERIFY DEVICE</button>
+<div id="loginStatus" class="status">Enter the authorized scanner PIN and tap VERIFY DEVICE.</div>
+</div>
+<div class="card" id="cameraBox">
+<div id="cameraStatus" class="status success">Device verified. Start the camera.</div>
+<button id="startButton" class="start">START CAMERA</button><button id="stopButton" class="stop">STOP CAMERA</button>
+<video id="video" autoplay muted playsinline></video><div id="scanCount" class="scan-count">Scanned: 0</div>
+</div>
+<div class="card result-card" id="staffCard">
+<div class="staff-header"><div class="staff-name" id="staffName"></div><div class="staff-id" id="staffId"></div></div>
+<div class="details" id="staffDetails"></div>
+<div class="attendance-result"><div class="action" id="attendanceAction"></div><div class="result-grid">
+<div class="result-item"><div class="result-label">Date</div><div class="result-value" id="resultDate"></div></div>
+<div class="result-item"><div class="result-label">IN</div><div class="result-value" id="resultIn"></div></div>
+<div class="result-item"><div class="result-label">OUT</div><div class="result-value" id="resultOut"></div></div>
+<div class="result-item"><div class="result-label">Duration</div><div class="result-value" id="resultDuration"></div></div>
+<div class="result-item"><div class="result-label">Status</div><div class="result-value" id="resultStatus"></div></div>
+<div class="result-item"><div class="result-label">Late</div><div class="result-value" id="resultLate"></div></div>
+<div class="result-item"><div class="result-label">Half-day deduction</div><div class="result-value" id="resultDeduction"></div></div>
+<div class="result-item"><div class="result-label">Reason / review</div><div class="result-value" id="resultReason"></div></div>
+</div></div>
+<div class="small">Salary amounts are not displayed here.</div>
+</div>
+<div class="small">Use this page only on a college-authorized scanner device. Staff QR/profile links identify the staff member; attendance is recorded only after device PIN verification.</div>
 </div>
 <script>
-/* Replace this with the deployed Staff Apps Script Web App URL ending in /exec. */
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4E2rppQige2hWRk46wc62yMkzhlLUTQlDCdndas2vPtjRMTiLDKjFgDAI8GMyLeFt7g/exec";
-const urlParams = new URLSearchParams(window.location.search);
-const deviceId = String(urlParams.get("device") || "SCAN001").trim().toUpperCase();
-let sessionToken="", stream=null, scanning=false, detector=null, detecting=false, jsonpCounter=0, scanCount=0;
-const processingStaff=new Set(), recentScans=new Map();
+const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbxC8T7S_j7rNFPk3rsZjYTEY0NlorjvBM5lf6Aor5KTeKZLJ7gToqRZv-MWr4uWuvvR/exec";
+const urlParams=new URLSearchParams(window.location.search);
+const deviceId=String(urlParams.get("device")||"SCAN001").trim().toUpperCase();
+let sessionToken="",stream=null,scanning=false,detector=null,detecting=false,jsonpCounter=0,scanCount=0;
+const processingStaff=new Set(),recentScans=new Map();
 document.getElementById("deviceDisplay").textContent=deviceId;
-
-function statusBox(id,message,error,success){
-  const box=document.getElementById(id);box.textContent=message;
-  box.className="status"+(error?" error":"")+(success?" success":"");
-}
-function callApi(params){
-  return new Promise((resolve,reject)=>{
-    const endpoint=String(APPS_SCRIPT_URL||"").trim();
-    if(!endpoint || endpoint.includes("PASTE_CURRENT_") || endpoint.includes("PASTE_STAFF_")) {
-      reject(new Error("The Apps Script URL has not been configured. Paste the current deployed Web app URL ending in /exec into index.html."));
-      return;
-    }
-    if(!/^https:\/\/script\.google\.com\/macros\/s\/[^\s]+\/exec$/.test(endpoint)) {
-      reject(new Error("The Apps Script URL must be the full Google Web app URL ending exactly in /exec."));
-      return;
-    }
-    const callbackName="staffAttendanceCallback_"+Date.now()+"_"+(++jsonpCounter);
-    const script=document.createElement("script");
-    const query=new URLSearchParams(params);
-    query.set("callback",callbackName);
-    query.set("_ts",String(Date.now())); // prevent stale cached responses
-    let finished=false;
-    const cleanup=()=>{
-      try{delete window[callbackName]}catch(e){window[callbackName]=undefined;}
-      if(script.parentNode)script.parentNode.removeChild(script);
-    };
-    const finishError=(message)=>{
-      if(finished)return;
-      finished=true;clearTimeout(timeout);cleanup();reject(new Error(message));
-    };
-    const timeout=setTimeout(()=>finishError("The Apps Script request timed out. Check the deployment URL and access settings."),20000);
-    window[callbackName]=(response)=>{
-      if(finished)return;
-      finished=true;clearTimeout(timeout);cleanup();resolve(response);
-    };
-    script.onerror=()=>finishError("Browser blocked or could not load the Apps Script response. Since direct ping works, check Deploy > Manage deployments: deployment type must be Web app, Execute as must be Me, and access must allow Anyone/anonymous access. Then deploy a New version. Also verify this exact /exec URL is the current deployment URL.");
-    const separator=endpoint.includes("?")?"&":"?";
-    script.src=endpoint+separator+query.toString();
-    document.head.appendChild(script);
-  });
-}
-async function verifyDevice(){
-  const pin=String(document.getElementById("pin").value||"").trim();
-  if(!/^\d{4}$/.test(pin)){statusBox("loginStatus","Please enter exactly 4 digits.",true,false);return}
-  const button=document.getElementById("verifyButton");button.disabled=true;button.textContent="VERIFYING...";
-  statusBox("loginStatus","Connecting to attendance server...",false,false);
-  try{
-    const r=await callApi({api:"verify",device:deviceId,pin});
-    if(r&&r.success){sessionToken=r.token;document.getElementById("loginBox").style.display="none";document.getElementById("cameraBox").style.display="block";statusBox("cameraStatus","DEVICE VERIFIED.\n\nTap START CAMERA.",false,true)}
-    else statusBox("loginStatus",r&&r.message||"Verification failed.",true,false);
-  }catch(e){statusBox("loginStatus","Server connection error.\n\n"+e.message+"\n\nConfirm that index.html contains the latest deployed /exec URL and that the Web app access setting permits this scanner.",true,false)}
-  button.disabled=false;button.textContent="VERIFY DEVICE";
-}
-document.getElementById("pin").addEventListener("keydown",e=>{if(e.key==="Enter")verifyDevice()});
-document.getElementById("verifyButton").addEventListener("click",verifyDevice);
-
-// Check the server when the page opens so URL/deployment problems are visible before PIN entry.
-(async function checkServerOnLoad(){
-  try {
-    const r=await callApi({api:"ping"});
-    if(r && r.success) statusBox("loginStatus","Server connected. Enter the authorized device PIN and tap VERIFY DEVICE.",false,true);
-    else statusBox("loginStatus","Server responded, but reported an error: "+((r&&r.message)||"Unknown response"),true,false);
-  } catch(e) {
-    statusBox("loginStatus","Server connection check failed.\n\n"+e.message,true,false);
-  }
-})();
-
-async function startCamera(){
-  if(!sessionToken)return;
-  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){statusBox("cameraStatus","Camera is not supported in this browser.",true,false);return}
-  if(!window.isSecureContext){statusBox("cameraStatus","Please use the HTTPS GitHub Pages URL.",true,false);return}
-  if(!("BarcodeDetector" in window)){statusBox("cameraStatus","QR scanning requires a recent Chrome browser that supports BarcodeDetector.",true,false);return}
-  stopCamera(false);
-  try{
-    detector=new BarcodeDetector({formats:["qr_code"]});statusBox("cameraStatus","Starting camera...",false,false);
-    stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:640},height:{ideal:480}},audio:false});
-    const video=document.getElementById("video");video.srcObject=stream;await video.play();scanning=true;
-    statusBox("cameraStatus","CAMERA ACTIVE.\n\nScan staff QR codes continuously.",false,true);scanLoop();
-  }catch(e){stopCamera(false);statusBox("cameraStatus","Unable to start camera.\n\n"+e.message,true,false)}
-}
-function stopCamera(showMessage=true){
-  scanning=false;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}
-  const video=document.getElementById("video");if(video)video.srcObject=null;
-  if(showMessage)statusBox("cameraStatus","Camera stopped.",false,false);
-}
-document.getElementById("startButton").addEventListener("click",startCamera);
-document.getElementById("stopButton").addEventListener("click",()=>stopCamera(true));
-async function scanLoop(){
-  if(!scanning)return;
-  if(!detecting&&detector){
-    const video=document.getElementById("video");
-    if(video.readyState>=2){detecting=true;try{const codes=await detector.detect(video);if(codes&&codes.length&&codes[0].rawValue)processQr(codes[0].rawValue)}catch(e){console.log("QR detection",e)}detecting=false}
-  }
-  if(scanning)setTimeout(()=>requestAnimationFrame(scanLoop),80);
-}
-function extractStaffId(raw){
-  const value=String(raw||"").trim();
-  try{const url=new URL(value);const id=url.searchParams.get("id");if(id)return id.trim().toUpperCase()}catch(e){}
-  const match=value.match(/\bSTAFF[-_ ]?[A-Z0-9]{3,}\b/i);
-  return match?match[0].replace(/[-_ ]/g,"").toUpperCase():"";
-}
-function processQr(raw){
-  const id=extractStaffId(raw);if(!id)return;
-  const now=Date.now(),previous=recentScans.get(id);if(previous&&now-previous<1800)return;
-  if(processingStaff.has(id))return;
-  recentScans.set(id,now);processingStaff.add(id);
-  statusBox("cameraStatus","QR DETECTED\n\nStaff ID: "+id+"\n\nRecording attendance...",false,false);
-  recordAttendance(id).finally(()=>processingStaff.delete(id));
-}
-async function recordAttendance(id){
-  try{
-    const r=await callApi({api:"record",staff:id,token:sessionToken,device:deviceId});
-    if(r&&r.success){scanCount++;document.getElementById("scanCount").textContent="Scanned: "+scanCount;showStaffResult(r);statusBox("cameraStatus",r.message||"Attendance recorded.",false,true)}
-    else statusBox("cameraStatus",r&&r.message||"Attendance failed.",true,false);
-  }catch(e){statusBox("cameraStatus","Attendance server error.\n\n"+e.message,true,false)}
-}
-function detail(label,value){return '<div class="detail"><div class="detail-label">'+escapeHtml(label)+'</div><div class="detail-value">'+escapeHtml(value||"-")+'</div></div>'}
-function escapeHtml(v){return String(v===null||v===undefined?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
-function showStaffResult(r){
-  const s=r.staff||{},a=r.attendance||{},m=r.summary||{};
-  document.getElementById("staffCard").style.display="block";
-  document.getElementById("staffName").textContent=s.name||"-";
-  document.getElementById("staffId").textContent="Staff ID: "+(s.staffId||"-");
-  document.getElementById("staffDetails").innerHTML=
-    detail("Designation",s.designation)+detail("Department",s.department)+detail("Qualification",s.qualification)+detail("Experience",s.experience)+detail("Mobile",s.mobile)+detail("Email",s.email)+detail("Status",s.status);
-  document.getElementById("attendanceAction").textContent=r.action==="IN"?"✓ IN TIME RECORDED":r.action==="OUT"?"✓ OUT TIME RECORDED":"ATTENDANCE ALREADY COMPLETE";
-  document.getElementById("resultDate").textContent=a.date||"-";
-  document.getElementById("resultIn").textContent=a.inTime||"-";
-  document.getElementById("resultOut").textContent=a.outTime||"-";
-  document.getElementById("resultDuration").textContent=a.duration||"-";
-  document.getElementById("resultStatus").textContent=a.status||"-";
-  document.getElementById("resultLate").textContent=a.late||"-";
-  document.getElementById("summaryTitle").textContent="Attendance Summary — "+(m.month||"Current Month")+" "+(m.year||"");
-  document.getElementById("sumPct").textContent=Number(m.percentage||0).toFixed(1)+"%";
-  document.getElementById("sumWorking").textContent=m.workingDays??0;
-  document.getElementById("sumFullHalf").textContent=(m.fullDays??0)+" / "+(m.halfDays??0);
-  document.getElementById("sumAbsent").textContent=m.absentDays??0;
-  document.getElementById("sumPayable").textContent=m.payableDays??0;
-  document.getElementById("sumDeduction").textContent=m.deductionDays??0;
-}
-</script>
-</body>
-</html>
+function status(id,msg,error,success){const el=document.getElementById(id);el.textContent=msg;el.className="status"+(error?" error":"")+(success?" success":"");}
+function api(params){return new Promise((resolve,reject)=>{const cb="staffAttendanceCallback_"+Date.now()+"_"+(++jsonpCounter);const script=document.createElement("script");const query=new URLSearchParams({...params,callback:cb});let finished=false;const timeout=setTimeout(()=>{if(finished)return;finished=true;cleanup();reject(Error("Attendance server timed out."));},12000);window[cb]=response=>{if(finished)return;finished=true;clearTimeout(timeout);cleanup();resolve(response);};script.onerror=()=>{if(finished)return;finished=true;clearTimeout(timeout);cleanup();reject(Error("Unable to connect to attendance server."));};function cleanup(){try{delete window[cb]}catch(e){window[cb]=undefined}if(script.parentNode)script.parentNode.removeChild(script);}script.src=APPS_SCRIPT_URL+"?"+query.toString();document.body.appendChild(script);});}
+async function verifyDevice(){const button=document.getElementById("verifyButton"),pin=String(document.getElementById("pin").value||"").trim();if(!/^\d{4}$/.test(pin)){status("loginStatus","Please enter exactly 4 digits.",true,false);return;}button.disabled=true;button.textContent="VERIFYING...";status("loginStatus","Connecting to attendance server...",false,false);try{const r=await api({api:"verify",device:deviceId,pin});if(r&&r.success){sessionToken=r.token;document.getElementById("loginBox").style.display="none";document.getElementById("cameraBox").style.display="block";status("cameraStatus","DEVICE VERIFIED.\n\nTap START CAMERA.",false,true);}else status("loginStatus",r&&r.message||"Verification failed.",true,false);}catch(e){status("loginStatus","Server connection error.\n\n"+e.message,true,false);}button.disabled=false;button.textContent="VERIFY DEVICE";}
+document.getElementById("pin").addEventListener("keydown",e=>{if(e.key==="Enter")verifyDevice()});document.getElementById("verifyButton").addEventListener("click",verifyDevice);
+async function startCamera(){if(!sessionToken)return;if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){status("cameraStatus","Camera is not supported in this browser.",true,false);return;}if(!window.isSecureContext){status("cameraStatus","Please use the HTTPS GitHub Pages URL.",true,false);return;}if(!("BarcodeDetector" in window)){status("cameraStatus","QR scanning requires a recent Chrome browser with BarcodeDetector support.",true,false);return;}stopCamera(false);try{detector=new BarcodeDetector({formats:["qr_code"]});status("cameraStatus","Starting camera...",false,false);stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:640},height:{ideal:480}},audio:false});const video=document.getElementById("video");video.srcObject=stream;await video.play();scanning=true;status("cameraStatus","CAMERA ACTIVE.\n\nScan staff QR codes continuously.",false,true);scanLoop();}catch(e){console.error(e);stopCamera(false);status("cameraStatus","Unable to start camera.\n\n"+e.message,true,false);}}
+function stopCamera(showMessage=true){scanning=false;if(stream){stream.getTracks().forEach(t=>t.stop());stream=null;}const v=document.getElementById("video");if(v)v.srcObject=null;if(showMessage)status("cameraStatus","Camera stopped.",false,false);}
+document.getElementById("startButton").addEventListener("click",startCamera);document.getElementById("stopButton").addEventListener("click",()=>stopCamera(true));
+async function scanLoop(){if(!scanning)return;if(!detecting&&detector){const video=document.getElementById("video");if(video.readyState>=2){detecting=true;try{const codes=await detector.detect(video);if(codes&&codes.length&&codes[0].rawValue)processQr(codes[0].rawValue);}catch(e){console.log("QR detection",e);}detecting=false;}}if(scanning)setTimeout(()=>requestAnimationFrame(scanLoop),70);}
+function extractStaffId(raw){const value=String(raw||"").trim();try{const u=new URL(value);const id=u.searchParams.get("id");if(id)return id.trim();}catch(e){}if(/^[A-Za-z0-9_-]{2,40}$/.test(value))return value;return "";}
+function processQr(raw){const id=extractStaffId(raw);if(!id)return;const now=Date.now(),prev=recentScans.get(id);if(prev&&now-prev<1800)return;if(processingStaff.has(id))return;recentScans.set(id,now);processingStaff.add(id);status("cameraStatus","QR DETECTED\n\nStaff ID: "+id+"\n\nRecording attendance...",false,false);recordAttendance(id).finally(()=>processingStaff.delete(id));}
+async function recordAttendance(id){try{const r=await api({api:"record",staff:id,token:sessionToken,device:deviceId});if(r&&r.success){scanCount++;document.getElementById("scanCount").textContent="Scanned: "+scanCount;showStaffResult(r);status("cameraStatus",r.message||"Attendance recorded.",false,true);}else status("cameraStatus",r&&r.message||"Attendance failed.",true,false);}catch(e){status("cameraStatus","Attendance server error.\n\n"+e.message,true,false);}}
+function showStaffResult(r){const s=r.staff,a=r.attendance;if(!s)return;document.getElementById("staffCard").style.display="block";document.getElementById("staffName").textContent=s.name||"-";document.getElementById("staffId").textContent="Staff ID: "+(s.staffId||"-");document.getElementById("staffDetails").innerHTML=detail("Designation",s.designation)+detail("Department",s.department)+detail("Qualification",s.qualification)+detail("Experience",s.experience)+detail("Mobile",s.mobile)+detail("Email",s.email)+detail("Status",s.status);document.getElementById("attendanceAction").textContent=r.action==="IN"?"✓ IN RECORDED":r.action==="OUT"?"✓ OUT RECORDED":r.action==="NO_CHANGE"?"✓ ALREADY COMPLETED":"✓ ATTENDANCE UPDATED";document.getElementById("resultDate").textContent=a.date||"-";document.getElementById("resultIn").textContent=a.inTime||"-";document.getElementById("resultOut").textContent=a.outTime||"-";document.getElementById("resultDuration").textContent=a.duration||"-";document.getElementById("resultStatus").textContent=a.status||"-";document.getElementById("resultLate").textContent=a.late||"No";document.getElementById("resultDeduction").textContent=Number(a.deduction||0).toFixed(1)+" day";document.getElementById("resultReason").textContent=(a.reason||"—")+(a.reviewRequired?" · OUT review required":"");document.getElementById("staffCard").scrollIntoView({behavior:"smooth",block:"nearest"});}
+function detail(label,value){return '<div class="detail"><div class="detail-label">'+esc(label)+'</div><div class="detail-value">'+esc(value||"-")+'</div></div>';}
+function esc(v){return String(v==null?"":v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+</script></body></html>

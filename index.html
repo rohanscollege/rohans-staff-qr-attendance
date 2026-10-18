@@ -55,7 +55,7 @@ button{width:100%;padding:13px;border:0;border-radius:10px;font-size:16px;font-w
 <div class="small">Use this page only on a college-authorized scanner device. Staff QR/profile links identify the staff member; attendance is recorded only after device PIN verification.</div>
 </div>
 <script>
-const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbxC8T7S_j7rNFPk3rsZjYTEY0NlorjvBM5lf6Aor5KTeKZLJ7gToqRZv-MWr4uWuvvR/exec";  
+const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbxxmydX-SJuHY0j9Tn4NoKUKapZ20igZF0hlXBR3Q4QyYZUTU-vYgHrMUJn8UiJl7CKzA/exec";  
 const urlParams=new URLSearchParams(window.location.search);
 const deviceId=String(urlParams.get("device")||"SCAN001").trim().toUpperCase();
 let sessionToken="",stream=null,scanning=false,detector=null,detecting=false,jsonpCounter=0,scanCount=0;
